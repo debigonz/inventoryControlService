@@ -1,6 +1,6 @@
 package com.inventory.userservice.domain.repository;
 
-import com.inventory.userservice.domain.model.User;
+import com.inventory.userservice.domain.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

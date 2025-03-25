@@ -1,13 +1,12 @@
 package com.inventory.userservice.service;
 
-import com.inventory.userservice.domain.model.User;
+import com.inventory.userservice.domain.entity.User;
 import com.inventory.userservice.domain.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,15 +26,11 @@ public class UserService implements UserDetailsService {
         boolean userExists = userRepository.findByEmail(user.getEmail()).isPresent();
         if (userExists) {
             throw new Exception("User already exists");
-        } else {
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            String hashedPassword = passwordEncoder.encode(user.getPassword());
-            user.setPassword(hashedPassword);
         }
         return userRepository.save(user);
     }
 
-    public User updateUser(User user) throws Exception {
+    public User updateUser(User user) throws UsernameNotFoundException {
         boolean userExists = userRepository.findByEmail(user.getEmail()).isPresent();
         if (userExists) {
             userRepository.save(user);

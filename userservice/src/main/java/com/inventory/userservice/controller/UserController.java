@@ -1,10 +1,12 @@
 package com.inventory.userservice.controller;
 
-import com.inventory.userservice.domain.model.User;
+import com.inventory.userservice.domain.entity.User;
 import com.inventory.userservice.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+//import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,23 +22,23 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<User> updateUser(@RequestBody User user) throws Exception {
+    public ResponseEntity<User> updateUser(@RequestBody User user) throws UsernameNotFoundException {
         return new ResponseEntity<>(userService.updateUser(user), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long id) throws Exception {
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) throws UsernameNotFoundException {
         userService.deleteUser(id);
         return new ResponseEntity<>("The user : " + id + " was deleted", HttpStatus.OK);
     }
 
     @GetMapping("/user/{email}")
-    public ResponseEntity<User> getUserByEmail(@PathVariable String email) throws Exception {
+    public ResponseEntity<User> getUserByEmail(@PathVariable String email) throws UsernameNotFoundException {
         return new ResponseEntity<>(userService.findUserByEmail(email), HttpStatus.OK);
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<User>> getUsers() throws Exception {
+    public ResponseEntity<List<User>> getUsers() {
         return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.OK);
     }
 }
