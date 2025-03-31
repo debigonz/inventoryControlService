@@ -8,16 +8,6 @@ This repository contains the code for developing an inventory control system. Th
 
 In this first stage, an authentication and authorization service will be implemented using **Spring Security** with **OAuth2**. This service will allow users to log in securely and manage their permissions within the system.
 
-## Requirements
-
-Before you start, make sure you have the following installed:
-
-- **Java 21**: The project is built using Java 21. Ensure you have the JDK installed.
-- **Maven**: This project uses Maven for dependency management. Install Maven if you haven't already.
-- **IntelliJ IDEA**: A recommended IDE for developing Java applications. You can use other IDEs, but IntelliJ provides great support for Spring projects.
-- **MySQL**: Install MySQL to manage the database for the application.
-- **Postman**: Used for testing the API endpoints.
-
 ## Repository Structure
 
 The repository is organized into the following folders:
@@ -31,3 +21,13 @@ The repository is organized into the following folders:
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/debigonz/inventoryControlService.git
+
+2. **Install the required tools**:
+
+Before you start, make sure you have the following installed:
+
+- **Java 21**: The project is built using Java 21. Ensure you have the JDK installed.
+- **Maven**: This project uses Maven for dependency management. Install Maven if you haven't already.
+- **IntelliJ IDEA**: A recommended IDE for developing Java applications. You can use other IDEs, but IntelliJ provides great support for Spring projects.
+- **MySQL**: Install MySQL to manage the database for the application.
+- **Postman**: Used for testing the API endpoints.
