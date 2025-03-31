@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: ms-authorization-service
+
+server:
+  port: 8081
