@@ -4,7 +4,7 @@ This repository contains the code for developing an inventory control system. Th
 
 ## Project Stages
 
-### Stage 1: Login Service
+### Stage 1: User service
 
 In this first stage, an authentication and authorization service will be implemented using **Spring Security** with **OAuth2**. This service will allow users to log in securely and manage their permissions within the system.
 
