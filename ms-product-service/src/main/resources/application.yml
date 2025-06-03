@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: ms-products
+  security:
+    oauth2:
+      resource server:
+        jwt:
+          issuer-uri: http://localhost:8081
+  datasource:
+    url: jdbc:mysql://localhost:3306/product_database?useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+  jpa:
+    properties:
+      hibernate.dialect: org.hibernate.dialect.MySQLDialect
+    database: MYSQL
+
+server:
+  port: 8083
