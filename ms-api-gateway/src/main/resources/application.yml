@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: ms-api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: users-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/users/**
+  security:
+    oauth2:
+      client:
+        registration:
+          ms-authorization-service:
+            client-id: messaging-client
+            client-secret: secret
+            scope: openid,profile,email
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8080/login/oauth2/code/messaging-client
+        provider:
+          ms-authorization-service:
+            authorization-uri: http://localhost:8081/oauth/authorize
+            token-uri: http://localhost:8081/oauth/token
+            jwk-set-uri: http://localhost:8081/oauth/jwks
+server:
+  port: 8090
