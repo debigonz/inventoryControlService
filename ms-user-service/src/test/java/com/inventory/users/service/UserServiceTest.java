@@ -30,7 +30,7 @@ class UserServiceTest {
     private UserService userService;
 
     @Test
-    void testUserCreatedSuccessfully() throws Exception {
+        void testUserCreatedSuccessfully() throws Exception {
         //Given
         when(userRepository.findByEmail(testUser().getEmail())).thenReturn(Optional.empty());
         when(passwordEncoder.encode(testUser().getPassword())).thenReturn("hashedPassword");
