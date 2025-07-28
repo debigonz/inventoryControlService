@@ -5,7 +5,6 @@ import com.inventory.products.domain.entity.Status;
 import com.inventory.products.domain.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
