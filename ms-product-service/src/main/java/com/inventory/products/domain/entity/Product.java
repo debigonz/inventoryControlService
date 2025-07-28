@@ -14,7 +14,6 @@ public class Product {
     private String description;
     private Double price;
     private Double cost;
-    private Integer stock;
     private String category;
     @Enumerated(EnumType.STRING)
     private Status status;

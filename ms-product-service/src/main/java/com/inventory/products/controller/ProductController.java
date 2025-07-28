@@ -20,12 +20,12 @@ public class ProductController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Product> updateProduct(Long id, Product product) {
-        return ResponseEntity.ok(productService.updateProduct(id, product));
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id) {
+        return ResponseEntity.ok(productService.updateProduct(id));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product>  getProductById(Long id) {
+    public ResponseEntity<Product>  getProductById(@PathVariable Long id) {
         return ResponseEntity.ok(productService.getProductById(id));
     }
 
@@ -35,7 +35,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteProduct(Long id) {
+    public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return ResponseEntity.ok("Product with ID " + id + " has been deleted");
     }
@@ -49,21 +49,14 @@ public class ProductController {
         return ResponseEntity.ok(products);
     }
 
-    @GetMapping("/stock/{id}")
-    public ResponseEntity<Integer> getProductStock(@PathVariable Long id) {
-        Integer product = productService.getProductQuantity(id);
-        if (product == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(product);
-    }
-
-    @GetMapping("/in-stock")
-    public ResponseEntity<List<Product>> getProductsInStock() {
-        List<Product> products = productService.getProductsInStock();
+    @GetMapping("/active")
+    public ResponseEntity<List<Product>> getAllActiveProducts() {
+        List<Product> products = productService.getActiveProducts();
         if (products.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(products);
     }
+
+
 }

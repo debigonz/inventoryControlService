@@ -5,6 +5,7 @@ import com.inventory.products.domain.entity.Status;
 import com.inventory.products.domain.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,14 +25,11 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public Product updateProduct(Long id, Product product) {
-        if (!productRepository.existsById(id)) {
-            log.error("Product with ID {} not found", id);
-            throw new IllegalArgumentException("Product not found");
-        }
-        product.setId(id);
-        log.info("Updating product: {}", product);
-        return productRepository.save(product);
+    public Product updateProduct(Long id) {
+        Product existingProduct = productRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Product not found with ID: " + id));
+        log.info("Updating product: {}", existingProduct);
+        return productRepository.save(existingProduct);
     }
 
     public Product getProductById(Long id) {
@@ -59,18 +57,9 @@ public class ProductService {
         return productRepository.findByCategory(category);
     }
 
-    public Integer getProductQuantity(Long id) {
-        log.info("Getting stock for product ID: {}", id);
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Product not found with ID: " + id));
-        return product.getStock();
-    }
-
-    public List<Product> getProductsInStock() {
-        log.info("Finding active products with stock greater than 0");
+    public List<Product> getActiveProducts() {
+        log.info("Finding active products");
         return productRepository.findByStatus(Status.ACTIVE).stream()
-                .filter(product -> product.getStock() > 0)
                 .toList();
     }
-
 }

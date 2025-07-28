@@ -13,7 +13,6 @@ public class ProductFactory {
         product.setPrice(5.99);
         product.setCost(2.99);
         product.setCategory("Test Category");
-        product.setStock(100);
         product.setStatus(Status.ACTIVE);
         return product;
     }
@@ -26,7 +25,6 @@ public class ProductFactory {
         product.setPrice(8.99);
         product.setCost(4.99);
         product.setCategory("Test Category");
-        product.setStock(50);
         product.setStatus(Status.ACTIVE);
         return product;
     }

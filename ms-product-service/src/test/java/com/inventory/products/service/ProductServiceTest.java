@@ -1,7 +1,6 @@
 package com.inventory.products.service;
 
 import com.inventory.products.domain.entity.Product;
-import com.inventory.products.domain.entity.Status;
 import com.inventory.products.domain.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -59,11 +58,11 @@ class ProductServiceTest {
     @Test
     void testProductUpdateSuccessfully() {
         // Given
-        when(productRepository.existsById(productTestTwo().getId())).thenReturn(true);
-        when(productRepository.save(any(Product.class))).thenReturn(productTestTwo());
+        when(productRepository.findById(productTestTwo().getId())).thenReturn(Optional.of(productTestTwo()));
+        when(productRepository.save(productTestTwo())).thenReturn(productTestTwo());
 
         // When
-        Product response = productService.updateProduct(productTestTwo().getId(), productTestTwo());
+        Product response = productService.updateProduct(productTestTwo().getId());
 
         //Then
         assertNotNull(response);
@@ -73,14 +72,14 @@ class ProductServiceTest {
     @Test
     void testProductUpdateFailed() {
         // Given
-        when(productRepository.existsById(productTestTwo().getId())).thenReturn(false);
+        when(productRepository.findById(productTestTwo().getId())).thenReturn(Optional.empty());
 
         // When
-        Exception thrown = assertThrows(Exception.class, () -> productService.updateProduct(productTestTwo().getId(), productTestTwo()));
+        Exception thrown = assertThrows(Exception.class, () -> productService.updateProduct(productTestTwo().getId()));
 
         // Then
         assertNotNull(thrown);
-        assertEquals("Product not found", thrown.getMessage());
+        assertEquals("Product not found with ID: " + productTestTwo().getId(), thrown.getMessage());
         verify(productRepository, never()).save(any(Product.class));
     }
 
@@ -163,45 +162,4 @@ class ProductServiceTest {
         assertNotNull(response);
         assertEquals(2, response.size());
     }
-
-    @Test
-    void testGetProductQuantitySuccessfully() {
-        // Given
-        when(productRepository.findById(productTestOne().getId())).thenReturn(Optional.of(productTestOne()));
-
-        // When
-        Integer response = productService.getProductQuantity(productTestOne().getId());
-
-        // Then
-        assertNotNull(response);
-        assertEquals(productTestOne().getStock(), response);
-    }
-
-    @Test
-    void testGetProductQuantityFailed() {
-        // Given
-        when(productRepository.findById(productTestOne().getId())).thenReturn(Optional.empty());
-
-        // When
-        Exception thrown = assertThrows(Exception.class, () -> productService.getProductQuantity(productTestOne().getId()));
-
-        // Then
-        assertNotNull(thrown);
-        assertEquals("Product not found with ID: " + productTestOne().getId(), thrown.getMessage());
-    }
-
-    @Test
-    void testFindProductsInStockSuccessfully() {
-        // Given
-        when(productRepository.findByStatus(Status.ACTIVE)).thenReturn(List.of(productTestOne(), productTestTwo()));
-
-        // When
-        List<Product> response = productService.getProductsInStock();
-
-        // Then
-        assertNotNull(response);
-        assertEquals(2, response.size());
-    }
-
-
 }
