@@ -1,6 +1,5 @@
 package com.inventory.inventory.service;
 
-import com.inventory.inventory.domain.dto.ProductDto;
 import com.inventory.inventory.domain.entity.Inventory;
 import com.inventory.inventory.domain.repository.InventoryRepository;
 import com.inventory.inventory.domain.repository.ProductServiceClient;
@@ -31,6 +30,8 @@ class InventoryServiceTest {
     @Test
     void testCreateInventorySuccessfully() {
         // Given
+        when(productServiceClient.getProductById(inventoryTestOne().getProductId()))
+                .thenReturn(productTestOne());
         when(inventoryRepository.save(any())).thenReturn(inventoryTestOne());
 
         // When
@@ -44,51 +45,38 @@ class InventoryServiceTest {
     @Test
     void testCreateInventoryFailure() {
         // Given
-        when(inventoryRepository.existsById(inventoryTestOne().getId())).thenReturn(true);
+        when(productServiceClient.getProductById(inventoryTestOne().getProductId())).thenReturn(productTestOne());
+        when(inventoryRepository.save(inventoryTestOne())).thenThrow(new IllegalArgumentException("Could not create inventory. Product not found or service error."));
 
         // When
         Exception thrown = assertThrows(Exception.class, () -> inventoryService.createInventory(inventoryTestOne()));
 
         // Then
         assertNotNull(thrown);
-        assertEquals("Inventory already exists", thrown.getMessage());
+        assertEquals("Could not create inventory. Product not found or service error.", thrown.getMessage());
     }
 
     @Test
-    void testGetProductsByCategorySuccessfully() {
-        // Given
-        when(productServiceClient.getProductsByCategory(productTestOne().getCategory()))
-                .thenReturn(List.of(productTestOne(), productTestTwo()));
-
-        // When
-        List<ProductDto> response = inventoryService.getProductsByCategory(productTestOne().getCategory());
-
-        // Then
-        assertNotNull(response);
-        assertFalse(response.isEmpty());
-        assertEquals(2, response.size());
-    }
-
-    @Test
-    void testGetProductQuantitySuccessfully() {
+    void testUpdateInventorySuccessfully() {
         // Given
         when(inventoryRepository.findById(inventoryTestOne().getId())).thenReturn(Optional.of(inventoryTestOne()));
+        when(inventoryRepository.save(any())).thenReturn(inventoryTestTwo());
 
         // When
-        Integer response = inventoryService.getProductQuantity(inventoryTestOne().getId());
+        Inventory response = inventoryService.updateInventory(inventoryTestOne().getId(), inventoryTestTwo());
 
         // Then
         assertNotNull(response);
-        assertEquals(inventoryTestOne().getQuantity(), response);
+        assertEquals(inventoryTestTwo().getId(), response.getId());
     }
 
     @Test
-    void testGetProductQuantityFailed() {
+    void testUpdateInventoryFailure() {
         // Given
         when(inventoryRepository.findById(inventoryTestOne().getId())).thenReturn(Optional.empty());
 
         // When
-        Exception thrown = assertThrows(Exception.class, () -> inventoryService.getProductQuantity(inventoryTestOne().getId()));
+        Exception thrown = assertThrows(Exception.class, () -> inventoryService.updateInventory(inventoryTestOne().getId(), inventoryTestTwo()));
 
         // Then
         assertNotNull(thrown);
@@ -96,10 +84,24 @@ class InventoryServiceTest {
     }
 
     @Test
+    void testGetProductsByCategorySuccessfully() {
+        // Given
+        when(inventoryRepository.findByCategory(inventoryTestOne().getCategory()))
+                .thenReturn(List.of(inventoryTestOne(), inventoryTestTwo()));
+
+        // When
+        List<Inventory> response = inventoryService.getProductsByCategory(inventoryTestOne().getCategory());
+
+        // Then
+        assertNotNull(response);
+        assertFalse(response.isEmpty());
+        assertEquals(2, response.size());
+    }
+
+    @Test
     void testGetProductsInStockSuccessfully() {
         // Given
-        when(productServiceClient.getActiveProducts()).thenReturn(List.of(productTestOne(), productTestTwo()));
-        when(inventoryRepository.findProductsWithStock()).thenReturn(List.of(inventoryTestOne(), inventoryTestTwo()));
+        when(inventoryRepository.findByStatusAndQuantityGreaterThan(any(), any())).thenReturn(List.of(inventoryTestOne(), inventoryTestTwo()));
 
         // When
         List<Inventory> response = inventoryService.getProductsInStock();
@@ -111,42 +113,76 @@ class InventoryServiceTest {
     }
 
     @Test
-    void testGetProductsInStockNoActiveProducts() {
-        // Given
-        when(productServiceClient.getActiveProducts()).thenReturn(List.of());
-
-        // When
-        List<Inventory> response = inventoryService.getProductsInStock();
-
-        // Then
-        assertNotNull(response);
-        assertTrue(response.isEmpty());
-    }
-
-    @Test
-    void testGetProductsInStockNoInventoriesWithStock() {
-        // Given
-        when(productServiceClient.getActiveProducts()).thenReturn(List.of(productTestOne(), productTestTwo()));
-        when(inventoryRepository.findProductsWithStock()).thenReturn(List.of());
-
-        // When
-        List<Inventory> response = inventoryService.getProductsInStock();
-
-        // Then
-        assertNotNull(response);
-        assertTrue(response.isEmpty());
-    }
-
-    @Test
     void testGetProductsInStockFail() {
         // Given
-        when(productServiceClient.getActiveProducts()).thenThrow(new RuntimeException("Failed to retrieve active products"));
+        when(inventoryRepository.findByStatusAndQuantityGreaterThan(any(), any())).thenThrow(new IllegalArgumentException("Failed to retrieve products in stock"));
 
         // When
-        Exception thrown = assertThrows(RuntimeException.class, () -> inventoryService.getProductsInStock());
+        Exception thrown = assertThrows(Exception.class, () -> inventoryService.getProductsInStock());
 
         // Then
         assertNotNull(thrown);
+    }
+
+    @Test
+    void testGetAllInventoriesSuccessfully() {
+        // Given
+        when(inventoryRepository.findAll()).thenReturn(List.of(inventoryTestOne(), inventoryTestTwo()));
+
+        // When
+        List<Inventory> response = inventoryService.getAllInventories();
+
+        // Then
+        assertNotNull(response);
+        assertEquals(2, response.size());
+    }
+
+    @Test
+    void testGetByIdSuccessfully() {
+        // Given
+        when(inventoryRepository.findById(inventoryTestOne().getId())).thenReturn(Optional.of(inventoryTestOne()));
+
+        // When
+        Inventory response = inventoryService.getInventoryById(inventoryTestOne().getId());
+
+        // Then
+        assertNotNull(response);
+        assertEquals(inventoryTestOne().getId(), response.getId());
+    }
+
+    @Test
+    void testGetByIdFailure() {
+        // Given
+        when(inventoryRepository.findById(inventoryTestOne().getId())).thenReturn(Optional.empty());
+
+        // When
+        Exception thrown = assertThrows(Exception.class, () -> inventoryService.getInventoryById(inventoryTestOne().getId()));
+
+        // Then
+        assertNotNull(thrown);
+        assertEquals("Inventory not found with ID: " + inventoryTestOne().getId(), thrown.getMessage());
+    }
+
+    @Test
+    void testDeleteInventorySuccessfully() {
+        // Given
+        when(inventoryRepository.existsById(inventoryTestOne().getId())).thenReturn(true);
+
+        // When
+        assertDoesNotThrow(() -> inventoryService.deleteInventory(inventoryTestOne().getId()));
+    }
+
+    @Test
+    void testDeleteInventoryFailure() {
+        // Given
+        when(inventoryRepository.existsById(inventoryTestOne().getId())).thenReturn(false);
+
+        // When
+        Exception thrown = assertThrows(Exception.class, () -> inventoryService.deleteInventory(inventoryTestOne().getId()));
+
+        // Then
+        assertNotNull(thrown);
+        assertEquals("Inventory not found", thrown.getMessage());
     }
 
 }

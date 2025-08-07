@@ -12,4 +12,9 @@ public class Inventory {
     private Long id;
     private Long productId;
     private Integer quantity;
+    private Double price;
+    private Double cost;
+    private String category;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 }
