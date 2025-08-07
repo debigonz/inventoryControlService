@@ -1,7 +1,6 @@
 package com.inventory.products.service;
 
 import com.inventory.products.domain.entity.Product;
-import com.inventory.products.domain.entity.Status;
 import com.inventory.products.domain.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,10 +23,14 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public Product updateProduct(Long id) {
+    public Product updateProduct(Long id, Product productDetails) {
         Product existingProduct = productRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Product not found with ID: " + id));
         log.info("Updating product: {}", existingProduct);
+
+        existingProduct.setName(productDetails.getName());
+        existingProduct.setDescription(productDetails.getDescription());
+
         return productRepository.save(existingProduct);
     }
 
@@ -51,14 +54,5 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    public List<Product> getProductsByCategory(String category) {
-        log.info("Finding products by category: {}", category);
-        return productRepository.findByCategory(category);
-    }
 
-    public List<Product> getActiveProducts() {
-        log.info("Finding active products");
-        return productRepository.findByStatus(Status.ACTIVE).stream()
-                .toList();
-    }
 }

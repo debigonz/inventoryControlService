@@ -20,8 +20,8 @@ public class ProductController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id) {
-        return ResponseEntity.ok(productService.updateProduct(id));
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {
+        return ResponseEntity.ok(productService.updateProduct(id, product));
     }
 
     @GetMapping("/{id}")
@@ -39,24 +39,5 @@ public class ProductController {
         productService.deleteProduct(id);
         return ResponseEntity.ok("Product with ID " + id + " has been deleted");
     }
-
-    @GetMapping("/category/{category}")
-    public ResponseEntity<List<Product>> getAllProductsByCategory(@PathVariable String category) {
-        List<Product> products = productService.getProductsByCategory(category);
-        if (products.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(products);
-    }
-
-    @GetMapping("/active")
-    public ResponseEntity<List<Product>> getAllActiveProducts() {
-        List<Product> products = productService.getActiveProducts();
-        if (products.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(products);
-    }
-
 
 }

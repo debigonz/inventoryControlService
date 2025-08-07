@@ -62,7 +62,7 @@ class ProductServiceTest {
         when(productRepository.save(productTestTwo())).thenReturn(productTestTwo());
 
         // When
-        Product response = productService.updateProduct(productTestTwo().getId());
+        Product response = productService.updateProduct(productTestTwo().getId(), productTestTwo());
 
         //Then
         assertNotNull(response);
@@ -75,7 +75,7 @@ class ProductServiceTest {
         when(productRepository.findById(productTestTwo().getId())).thenReturn(Optional.empty());
 
         // When
-        Exception thrown = assertThrows(Exception.class, () -> productService.updateProduct(productTestTwo().getId()));
+        Exception thrown = assertThrows(Exception.class, () -> productService.updateProduct(productTestTwo().getId(), productTestTwo()));
 
         // Then
         assertNotNull(thrown);
@@ -147,19 +147,5 @@ class ProductServiceTest {
         assertEquals("Product not found", thrown.getMessage());
         verify(productRepository).existsById(productTestTwo().getId());
         verify(productRepository, never()).deleteById(anyLong());
-    }
-
-    @Test
-    void testGetProductsByCategorySuccessfully() {
-        // Given
-        String category = "Test Category";
-        when(productRepository.findByCategory(category)).thenReturn(List.of(productTestOne(), productTestTwo()));
-
-        // When
-        List<Product> response = productService.getProductsByCategory(category);
-
-        // Then
-        assertNotNull(response);
-        assertEquals(2, response.size());
     }
 }
