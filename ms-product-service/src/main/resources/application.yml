@@ -7,7 +7,7 @@ spring:
         jwt:
           issuer-uri: http://localhost:8081
   datasource:
-    url: jdbc:mysql://localhost:3306/product_database?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/inventory_database?useSSL=false&serverTimezone=UTC
     username: root
     password: root
   jpa:
