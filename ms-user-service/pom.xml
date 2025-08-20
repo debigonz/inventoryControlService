@@ -11,7 +11,7 @@
 	<groupId>com.inventory</groupId>
 	<artifactId>ms-user-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>userservice</name>
+	<name>ms-users</name>
 	<description>ms-user-service</description>
 	<properties>
 		<java.version>21</java.version>
