@@ -11,9 +11,9 @@ public class AuthenticationService {
 
     private final UserServiceClient userServiceClient;
 
-    public boolean authenticate(String email, String password) {
+    public boolean authenticate(String username, String password) {
         try {
-            userServiceClient.validateCredentials(new AuthRequest(email, password));
+            userServiceClient.validateCredentials(new AuthRequest(username, password));
             return true;
         } catch (Exception e) {
             return false;

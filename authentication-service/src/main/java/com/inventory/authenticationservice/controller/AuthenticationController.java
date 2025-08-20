@@ -16,7 +16,7 @@ public class AuthenticationController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<Void> authenticate(@RequestBody AuthRequest authRequest) {
-        boolean isAuthenticated = authenticationService.authenticate(authRequest.getEmail(), authRequest.getPassword());
+        boolean isAuthenticated = authenticationService.authenticate(authRequest.getUsername(), authRequest.getPassword());
         if (isAuthenticated) {
             return ResponseEntity.ok().build();
         } else {
