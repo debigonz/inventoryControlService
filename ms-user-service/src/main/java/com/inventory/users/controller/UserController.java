@@ -45,7 +45,7 @@ public class UserController {
 
     @PostMapping("/validate")
     public ResponseEntity<Boolean> validateCredentials(@RequestBody AuthRequest authRequest) {
-        boolean isValid = userService.validateCredentials(authRequest.getEmail(), authRequest.getPassword());
+        boolean isValid = userService.validateCredentials(authRequest.getUsername(), authRequest.getPassword());
         return new ResponseEntity<>(isValid, HttpStatus.OK);
     }
 }

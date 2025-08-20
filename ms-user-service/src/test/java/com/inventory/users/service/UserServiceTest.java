@@ -149,11 +149,11 @@ class UserServiceTest {
     @Test
     void testValidateCredentialsSuccessfully() {
         //Given
-        when(userRepository.findByEmail(testUser().getEmail())).thenReturn(Optional.of(testUser()));
+        when(userRepository.findByUsername(testUser().getUsername())).thenReturn(Optional.of(testUser()));
         when(passwordEncoder.matches(testUser().getPassword(), testUser().getPassword())).thenReturn(true);
 
         //When
-        boolean response = userService.validateCredentials(testUser().getEmail(), testUser().getPassword());
+        boolean response = userService.validateCredentials(testUser().getUsername(), testUser().getPassword());
         //Then
         assertTrue(response);
     }
@@ -161,10 +161,10 @@ class UserServiceTest {
     @Test
     void testValidateCredentialsFailed() {
         //Given
-        when(userRepository.findByEmail(testUser().getEmail())).thenReturn(Optional.empty());
+        when(userRepository.findByUsername(testUser().getUsername())).thenReturn(Optional.empty());
 
         //When
-        boolean response = userService.validateCredentials(testUser().getEmail(), testUser().getPassword());
+        boolean response = userService.validateCredentials(testUser().getUsername(), testUser().getPassword());
         //Then
         assertFalse(response);
     }

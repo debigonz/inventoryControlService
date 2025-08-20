@@ -53,8 +53,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public boolean validateCredentials(String email, String password) {
-        Optional<User> user = userRepository.findByEmail(email);
+    public boolean validateCredentials(String username, String password) {
+        Optional<User> user = userRepository.findByUsername(username);
         return user.map(u -> passwordEncoder.matches(password, u.getPassword()))
                 .orElse(false);
     }
