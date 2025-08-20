@@ -4,12 +4,12 @@ import com.inventory.users.domain.entity.User;
 import com.inventory.users.domain.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @AllArgsConstructor
@@ -17,7 +17,7 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
-    @Autowired
+
     private final PasswordEncoder passwordEncoder;
 
     public User createUser(User user) throws Exception {
@@ -51,6 +51,12 @@ public class UserService {
     public List<User> findAllUsers() {
         log.info("Finding all users");
         return userRepository.findAll();
+    }
+
+    public boolean validateCredentials(String email, String password) {
+        Optional<User> user = userRepository.findByEmail(email);
+        return user.map(u -> passwordEncoder.matches(password, u.getPassword()))
+                .orElse(false);
     }
 
 }
