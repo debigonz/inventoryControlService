@@ -3,13 +3,13 @@ spring:
     name: ms-users
   security:
     oauth2:
-      resource server:
+      resourceserver:
         jwt:
           issuer-uri: http://localhost:8081
   datasource:
     url: jdbc:mysql://localhost:3306/inventory_database?useSSL=false&serverTimezone=UTC
     username: root
-    password: root
+    password: #put the password here
   jpa:
     properties:
       hibernate.dialect: org.hibernate.dialect.MySQLDialect
