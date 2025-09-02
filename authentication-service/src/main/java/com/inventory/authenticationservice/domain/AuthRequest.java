@@ -1,4 +1,4 @@
-package com.inventory.authenticationservice.domain.model;
+package com.inventory.authenticationservice.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package com.inventory.authenticationservice.controller;
 
-import com.inventory.authenticationservice.domain.model.AuthRequest;
+import com.inventory.authenticationservice.domain.AuthRequest;
 import com.inventory.authenticationservice.service.AuthenticationService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,11 +1,11 @@
 package com.inventory.authenticationservice.service;
 
 import com.inventory.authenticationservice.client.UserServiceClient;
-import com.inventory.authenticationservice.domain.model.AuthRequest;
-import lombok.AllArgsConstructor;
+import com.inventory.authenticationservice.domain.AuthRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class AuthenticationService {
 

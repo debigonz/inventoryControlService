@@ -1,6 +1,6 @@
 package com.inventory.authenticationservice.client;
 
-import com.inventory.authenticationservice.domain.model.AuthRequest;
+import com.inventory.authenticationservice.domain.AuthRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
