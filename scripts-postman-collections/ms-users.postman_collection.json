@@ -137,6 +137,14 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Validate Credentials",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
 		}
 	],
 	"auth": {
