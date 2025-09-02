@@ -14,7 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
@@ -41,7 +40,6 @@ import java.util.UUID;
 public class WebSecurityConfiguration {
 
     private final CustomAuthenticationManager customAuthenticationManager;
-    private final CustomUserDetailsService customUserDetailsService;
 
     @Bean
     @Order(1)
@@ -51,13 +49,13 @@ public class WebSecurityConfiguration {
 
         http
                 .securityMatcher(authorizationServerConfigurer.getEndpointsMatcher())
-                .with(authorizationServerConfigurer, (authorizationServer) ->
+                .with(authorizationServerConfigurer, authorizationServer ->
                         authorizationServer.oidc(Customizer.withDefaults()) // Habilitar OpenID Connect 1.0
                 )
-                .authorizeHttpRequests((authorize) ->
+                .authorizeHttpRequests(authorize ->
                         authorize.anyRequest().authenticated()
                 )
-                .exceptionHandling((exceptions) -> exceptions
+                .exceptionHandling(exceptions -> exceptions
                         .defaultAuthenticationEntryPointFor(
                                 new LoginUrlAuthenticationEntryPoint("/login"),
                                 new MediaTypeRequestMatcher(MediaType.TEXT_HTML)
@@ -71,21 +69,10 @@ public class WebSecurityConfiguration {
     @Order(2)
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated())
+                .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults()); // Manejar el login con formulario
 
         return http.build();
-    }
-
-    @Bean
-    @Primary
-    public AuthenticationManager authenticationManager() {
-        return customAuthenticationManager;
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return customUserDetailsService;
     }
 
     @Bean
@@ -141,5 +128,11 @@ public class WebSecurityConfiguration {
     @Bean
     public AuthorizationServerSettings authorizationServerSettings() {
         return AuthorizationServerSettings.builder().build();
+    }
+
+    @Bean
+    @Primary
+    public AuthenticationManager authenticationManager() {
+        return customAuthenticationManager;
     }
 }

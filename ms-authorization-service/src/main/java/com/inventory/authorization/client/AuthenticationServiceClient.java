@@ -11,3 +11,4 @@ public interface AuthenticationServiceClient {
     @PostMapping("/authenticate")
     void authenticate(@RequestBody AuthRequest authRequest);
 }
+

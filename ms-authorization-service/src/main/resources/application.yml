@@ -1,6 +1,28 @@
 spring:
   application:
     name: ms-authorization-service
+  security:
+    oauth2:
+      authorizationserver:
+        client:
+          messaging-client:
+            registration:
+              client-id: "messaging-client"
+              client-secret: "{noop}secret"
+              client-authentication-methods:
+                - "client_secret_basic"
+              authorization-grant-types:
+                - "authorization_code"
+                - "refresh_token"
+              redirect-uris:
+                - "http://127.0.0.1:8080/login/oauth2/code/messaging-client"
+              post-logout-redirect-uris:
+                - "http://127.0.0.1:8080/"
+              scopes:
+                - "openid"
+                - "profile"
+                - "email"
+            require-authorization-consent: true
 
 server:
   port: 8081
