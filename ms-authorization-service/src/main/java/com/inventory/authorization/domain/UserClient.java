@@ -5,7 +5,10 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class AuthRequest {
+public class UserClient {
+
     private String username;
     private String password;
+    private String email;
+    private UserRoleClient role;
 }
