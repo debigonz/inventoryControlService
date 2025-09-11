@@ -145,27 +145,4 @@ class UserServiceTest {
         assertNotNull(response);
         assertEquals(2, response.size());
     }
-
-    @Test
-    void testValidateCredentialsSuccessfully() {
-        //Given
-        when(userRepository.findByUsername(testUser().getUsername())).thenReturn(Optional.of(testUser()));
-        when(passwordEncoder.matches(testUser().getPassword(), testUser().getPassword())).thenReturn(true);
-
-        //When
-        boolean response = userService.validateCredentials(testUser().getUsername(), testUser().getPassword());
-        //Then
-        assertTrue(response);
-    }
-
-    @Test
-    void testValidateCredentialsFailed() {
-        //Given
-        when(userRepository.findByUsername(testUser().getUsername())).thenReturn(Optional.empty());
-
-        //When
-        boolean response = userService.validateCredentials(testUser().getUsername(), testUser().getPassword());
-        //Then
-        assertFalse(response);
-    }
 }

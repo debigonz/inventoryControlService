@@ -1,7 +1,6 @@
 package com.inventory.users.controller;
 
 import com.inventory.users.domain.entity.User;
-import com.inventory.users.domain.request.AuthRequest;
 import com.inventory.users.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -41,11 +40,5 @@ public class UserController {
     @GetMapping("/list")
     public ResponseEntity<List<User>> getUsers() {
         return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.OK);
-    }
-
-    @PostMapping("/validate")
-    public ResponseEntity<Boolean> validateCredentials(@RequestBody AuthRequest authRequest) {
-        boolean isValid = userService.validateCredentials(authRequest.getUsername(), authRequest.getPassword());
-        return new ResponseEntity<>(isValid, HttpStatus.OK);
     }
 }
