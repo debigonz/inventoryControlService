@@ -2,7 +2,6 @@ package com.inventory.users.utils;
 
 import com.inventory.users.domain.entity.User;
 import com.inventory.users.domain.entity.UserRole;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class UserFactory {
 
@@ -26,16 +25,15 @@ public class UserFactory {
         return user;
     }
 
-    public static String encryptPassword(String plainPassword) {
-        String encryptedPassword = new BCryptPasswordEncoder().encode(plainPassword);
-        System.out.println("Encrypted password: " + encryptedPassword);
-        return encryptedPassword;
-    }
-
     public static void main(String[] args) {
+        java.util.function.Function<String, String> encryptPassword = plainPassword -> {
+            String encryptedPassword = new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder().encode(plainPassword);
+            System.out.println("Encrypted password: " + encryptedPassword);
+            return encryptedPassword;
+        };
         System.out.println("Test user debi:");
-        encryptPassword("Test123*");
+        encryptPassword.apply("Test123*");
         System.out.println("Test admin santi:");
-        encryptPassword("Test123!");
+        encryptPassword.apply("Test123!");
     }
 }
