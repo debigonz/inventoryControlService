@@ -38,8 +38,8 @@ CREATE TABLE inventories (
 -- Inserts 
 -- Users
 INSERT INTO `users` (username, password, email, role) VALUES 
-('debigonz', 'Test123*', 'debigonz19@gmail.com', 'ADMIN'),
-('santiblanc', 'Test123!', 'santiblanc@example.com', 'USER');
+('debigonz', '$2a$10$NEtkNA128DRO8Jm6B2Y.e.3/XhGFWiOpvR7OnqbNe6.wmm9o.Xc5u', 'debigonz19@gmail.com', 'ADMIN'),
+('santiblanc', '$2a$10$rQjBReiKv4ml4Mmnuz6Mfu9DwiaPePr5S15419l5GFOTs8iflIDJW', 'santiblanc@example.com', 'USER');
 
 -- Products
 INSERT INTO `products` (name, description) VALUES
