@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: ms-service-registry
+server:
+  port: 8761
+
+eureka:
+  server:
+    enableSelfPreservation: false
+  client:
+    fetchRegistry: false
+    registerWithEureka: false
+  instance:
+    preferIpAddress: true
+
