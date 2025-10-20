@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.inventory</groupId>
-	<artifactId>ms-inventory-service</artifactId>
+	<artifactId>ms-inventories</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ms-inventory-service</name>
-	<description>ms-inventory-service</description>
+	<name>ms-inventories</name>
+	<description>inventory-service</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -68,6 +68,10 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
