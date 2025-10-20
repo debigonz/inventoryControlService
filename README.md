@@ -8,6 +8,14 @@ This repository contains the code for developing an inventory control system. Th
 
 In this first stage, an authentication and authorization service will be implemented using **Spring Security** with **OAuth2**. This service will allow users to log in securely and manage their permissions within the system.
 
+### Stage 2: Product service and Api Gateway
+
+In the second instance, the product service and API gateway were implemented. Both are secure and were configured as **OAuth2 resource servers**.
+
+### Stage 3: Inventory service
+
+In stage 3, the Inventory Service was implemented. As mentioned above, this is also an **OAuth2 resource server**. It was also configured with **OpenFeign** to communicate with the Product Service. 
+
 ## Repository Structure
 
 The repository is organized into the following folders:
