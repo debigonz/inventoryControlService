@@ -22,12 +22,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8084/inventories/create",
-					"protocol": "http",
+					"raw": "{{baseUrl}}/inventories/create",
 					"host": [
-						"localhost"
+						"{{baseUrl}}"
 					],
-					"port": "8084",
 					"path": [
 						"inventories",
 						"create"
@@ -42,12 +40,10 @@
 				"method": "PUT",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8084/inventories/update/6",
-					"protocol": "http",
+					"raw": "{{baseUrl}}/inventories/update/6",
 					"host": [
-						"localhost"
+						"{{baseUrl}}"
 					],
-					"port": "8084",
 					"path": [
 						"inventories",
 						"update",
@@ -63,12 +59,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8084/inventories/all",
-					"protocol": "http",
+					"raw": "{{baseUrl}}/inventories/all",
 					"host": [
-						"localhost"
+						"{{baseUrl}}"
 					],
-					"port": "8084",
 					"path": [
 						"inventories",
 						"all"
@@ -83,12 +77,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8084/inventories/in-stock",
-					"protocol": "http",
+					"raw": "{{baseUrl}}/inventories/in-stock",
 					"host": [
-						"localhost"
+						"{{baseUrl}}"
 					],
-					"port": "8084",
 					"path": [
 						"inventories",
 						"in-stock"
@@ -103,12 +95,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8084/inventories/category/Electronics",
-					"protocol": "http",
+					"raw": "{{baseUrl}}/inventories/category/Electronics",
 					"host": [
-						"localhost"
+						"{{baseUrl}}"
 					],
-					"port": "8084",
 					"path": [
 						"inventories",
 						"category",
@@ -124,12 +114,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8084/inventories/2",
-					"protocol": "http",
+					"raw": "{{baseUrl}}/inventories/2",
 					"host": [
-						"localhost"
+						"{{baseUrl}}"
 					],
-					"port": "8084",
 					"path": [
 						"inventories",
 						"2"
@@ -144,12 +132,10 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8084/inventories/delete/6",
-					"protocol": "http",
+					"raw": "{{baseUrl}}/inventories/delete/6",
 					"host": [
-						"localhost"
+						"{{baseUrl}}"
 					],
-					"port": "8084",
 					"path": [
 						"inventories",
 						"delete",
