@@ -19,7 +19,7 @@ spring:
         - id: inventory-service
           uri: lb://ms-inventories
           predicates:
-            - Path=/inventories/**    -
+            - Path=/inventories/**
   security:
     oauth2:
       resourceserver:
