@@ -15,7 +15,15 @@ In the second instance, the product service and API gateway were implemented. Bo
 ### Stage 3: Inventory service
 
 In stage 3, the Inventory Service was implemented. As mentioned above, this is also an **OAuth2 resource server**. It was also configured with **OpenFeign** to communicate with the Product Service. 
-AAll services use SQL with JPA. 
+All services use SQL with JPA. 
+
+### Stage 4: Eureka Server
+
+In the fourth stage, the Eureka Server microservice was added.  Spring Boot Actuator was also added to view the status/health of each of the services. 
+
+### Stage 5: Docker
+
+In the fifth instance, the applications and database were dockerized.
 
 ## Repository Structure
 
@@ -24,6 +32,8 @@ The repository is organized into the following folders:
 - **/scripts**: Contains the scripts necessary to create the database. It includes some predefined users to facilitate testing of the system.
 
 - **/postman-collections**: Includes Postman collections that allow testing of the different APIs available in the login service. This will help developers verify the functionality of the system more efficiently.
+
+- **/microservices**: This section defines all the microservices included in the project with their correct configurations.
 
 ## Setup Instructions
 
