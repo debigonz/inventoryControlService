@@ -1,0 +1,211 @@
+{
+	"info": {
+		"_postman_id": "d149d05d-d4e6-4254-a83c-a74c90c3a989",
+		"name": "ms-inventories",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25059382",
+		"_collection_link": "https://recyclerq1.postman.co/workspace/INVENTORY_CONTROL_SERVICE~517f7ed5-ec9d-4024-833d-39c9e4d62986/collection/25059382-d149d05d-d4e6-4254-a83c-a74c90c3a989?action=share&source=collection_link&creator=25059382"
+	},
+	"item": [
+		{
+			"name": "Create inventory",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"productId\": 6,\r\n    \"quantity\": 3,\r\n    \"price\": 1000.00,\r\n    \"cost\": 500.00,\r\n    \"category\": \"Electronics\",\r\n    \"status\": \"ACTIVE\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/inventories/create",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"inventories",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update inventory",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/inventories/update/6",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"inventories",
+						"update",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all inventories",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/inventories/all",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"inventories",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get product in stock",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/inventories/in-stock",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"inventories",
+						"in-stock"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get products by category",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/inventories/category/Electronics",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"inventories",
+						"category",
+						"Electronics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get inventory by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/inventories/2",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"inventories",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete inventory",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/inventories/delete/6",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"inventories",
+						"delete",
+						"6"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "clientSecret",
+				"value": "secret",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "messaging-client",
+				"type": "string"
+			},
+			{
+				"key": "accessTokenUrl",
+				"value": "http://localhost:8081/oauth2/token",
+				"type": "string"
+			},
+			{
+				"key": "scope",
+				"value": "message.read message.write",
+				"type": "string"
+			},
+			{
+				"key": "grant_type",
+				"value": "client_credentials",
+				"type": "string"
+			},
+			{
+				"key": "tokenName",
+				"value": "token",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

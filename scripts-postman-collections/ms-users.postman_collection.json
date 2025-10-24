@@ -1,0 +1,209 @@
+{
+	"info": {
+		"_postman_id": "d3f111d8-ca1e-49e3-92fe-ed6e6bba3349",
+		"name": "ms-users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25059382",
+		"_collection_link": "https://recyclerq1.postman.co/workspace/INVENTORY_CONTROL_SERVICE~517f7ed5-ec9d-4024-833d-39c9e4d62986/collection/25059382-d3f111d8-ca1e-49e3-92fe-ed6e6bba3349?action=share&source=collection_link&creator=25059382"
+	},
+	"item": [
+		{
+			"name": "Create user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"An access token is returned\", () => {",
+							"    pm.expect(pm.response.json()).to.have.property('token')",
+							"    pm.expect(pm.response.json().token).to.be.a('string')",
+							"    // Set the collection-scope \"token\" variable to the token received from the API",
+							"    // This lets us use it in other requests",
+							"    pm.collectionVariables.set('token', pm.response.json().token)",
+							"})",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"debb\",\r\n    \"password\":\"1234*\",\r\n    \"email\": \"deb@example.com\",\r\n    \"role\": \"USER\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/create",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"create"
+					]
+				},
+				"description": "This returns a `token` that you can use to retrieve information later on.\n\nWe have included a test to confirm if a token is returned. We have also added test scripts to copy the token to the `token` collection variable. This makes it easy for us to reuse this token in other requests in the collection."
+			},
+			"response": []
+		},
+		{
+			"name": "Update user",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"debb33\",\r\n    \"password\":\"1234*\",\r\n    \"email\": \"deb@example.com\",\r\n    \"role\": \"USER\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/update/3",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"update",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/users/delete/3",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"delete",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user by email",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/users/user/debigonz19@gmail.com",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"user",
+						"debigonz19@gmail.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get users",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/users/list",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"list"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "scope",
+				"value": "message.read message.write",
+				"type": "string"
+			},
+			{
+				"key": "clientSecret",
+				"value": "secret",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "messaging-client",
+				"type": "string"
+			},
+			{
+				"key": "accessTokenUrl",
+				"value": "http://localhost:8081/oauth2/token",
+				"type": "string"
+			},
+			{
+				"key": "tokenName",
+				"value": "token",
+				"type": "string"
+			},
+			{
+				"key": "grant_type",
+				"value": "client_credentials",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

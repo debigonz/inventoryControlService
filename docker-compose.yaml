@@ -1,0 +1,102 @@
+version: '1.0'
+
+services:
+  eureka-server:
+      image: ms-service-registry:latest
+      container_name: eureka-server
+      ports:
+        - "8761:8761"
+      networks:
+        - inventory-network
+  
+  authorization-server:
+    image: ms-authorization-service:latest
+    container_name: authorization-server
+    ports:
+      - "8081:8081"
+    networks:
+      - inventory-network 
+  
+  db-mysql:
+    image: mysql:8.0
+    container_name: db-mysql
+    ports:
+      - "3306:3306" 
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: inventory_database
+    volumes:
+      - ./scripts-postman-collections/inventory_database.sql:/docker-entrypoint-initdb.d/init.sql
+      - mysql-data:/var/lib/mysql 
+    networks:
+      - inventory-network
+  
+  user-service:
+    image: ms-user-service:latest 
+    container_name: ms-users
+    ports:
+      - "8082:8082"
+    networks:
+      - inventory-network
+    depends_on:
+      - eureka-server
+      - authorization-server
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI: http://authorization-server:8081
+      SPRING_DATASOURCE_URL: jdbc:mysql://db-mysql:3306/inventory_database?useSSL=false&serverTimezone=UTC
+  
+  product-service:
+    image: ms-product-service:latest 
+    container_name: ms-products
+    ports:
+      - "8083:8083"
+    networks:
+      - inventory-network
+    depends_on:
+      - eureka-server
+      - authorization-server
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI: http://authorization-server:8081
+      SPRING_DATASOURCE_URL: jdbc:mysql://db-mysql:3306/inventory_database?useSSL=false&serverTimezone=UTC
+  
+  inventory-service:
+    image: ms-inventory-service:latest
+    container_name: ms-inventories
+    ports:
+      - "8084:8084"
+    networks:
+      - inventory-network
+    depends_on:
+      - eureka-server
+      - authorization-server
+      - db-mysql
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI: http://authorization-server:8081
+      SPRING_DATASOURCE_URL: jdbc:mysql://db-mysql:3306/inventory_database?useSSL=false&serverTimezone=UTC
+  
+  api-gateway:
+    image: ms-api-gateway:latest 
+    container_name: api-gateway
+    ports:
+      - "8090:8090" 
+    networks:
+      - inventory-network
+    depends_on: 
+      - eureka-server
+      - authorization-server
+      - user-service
+      - product-service
+      - inventory-service
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI: http://authorization-server:8081       
+
+networks:
+  inventory-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
